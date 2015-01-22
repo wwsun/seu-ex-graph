@@ -1,0 +1,38 @@
+{
+  "nodes": [
+    {
+      "category": 0,
+      "name": "Homepage",
+      "url": "www.made-in-china",
+      "value": 10
+    },
+    {
+      "category": 1,
+      "name": "Login",
+      "value": 5
+    },
+    {
+      "category": 1,
+      "name": "Mobile Channel",
+      "value": 4
+    },
+    {
+      "category": 1,
+      "name": "Search",
+      "value": 9
+    },
+    {
+      "category": 2,
+      "name": "Search Engine",
+      "value": 20
+    },
+    {
+      "category": 2,
+      "name": "Others",
+      "value": 10
+    }
+  ],
+  "links": [
+    {"source": "Homepage", "target": "Login", "weight":10, "name": "inner"}
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "seu-ex-graph",
+  "version": "0.0.0",
+  "homepage": "https://github.com/wwsun/seu-ex-graph",
+  "authors": [
+    "Weiwei SUN <ww.sun@outlook.com>"
+  ],
+  "description": "data visualization demo",
+  "keywords": [
+    "visualization"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "*",
+    "jquery": "*",
+    "echarts": "~2.1.10"
+  }
+}
