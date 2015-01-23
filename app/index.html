@@ -35,21 +35,22 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <div class="tool filter-level">
-                        <h5> &nbsp;Filter Level</h5>
-                        <input type="number" step="any" id="coordinates-lng" class="form-control"
+                    <div class="tool filter">
+                        <h5> &nbsp;Filter</h5>
+                        <input type="number" step="any" id="model-filter" class="form-control"
                                placeholder="filter level">
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="tool">
-                        <h5> &nbsp;Start time</h5>
-                        <input type="date" id="timeframe-start" class="form-control" placeholder="mm/dd/yyyy">
+                        <h5> &nbsp;Model Level</h5>
+                        <input type="number" step="any" id="model-level" class="form-control"
+                               placeholder="filter level">
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="tool">
-                        <h5> &nbsp;End time</h5>
+                        <h5> &nbsp;Date</h5>
                         <input type="date" id="timeframe-end" class="form-control" placeholder="mm/dd/yyyy">
                     </div>
                 </div>
@@ -70,16 +71,16 @@
                 Second chart
             </div>
             <div class="chart-stage">
-                <div id="second" class="child-chart"></div>
+                <div id="detail-area" class="child-chart"></div>
             </div>
         </div>
 
         <div class="chart-wrapper">
             <div class="chart-title">
-                User Interests
+                Conversation
             </div>
             <div class="chart-stage">
-                <div id="chart-02"></div>
+                <div id="detail-funnel" class="child-chart"></div>
             </div>
         </div>
 
@@ -88,7 +89,7 @@
                 Flow Distribution
             </div>
             <div class="chart-stage">
-                <div id="chart-03"></div>
+                <div id="detail-pie" class="child-chart"></div>
             </div>
         </div>
     </div>
