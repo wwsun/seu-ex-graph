@@ -1,0 +1,79 @@
+{
+  "Search": {
+    "nodes": [
+      {
+        "category": 0,
+        "name": "Search",
+        "value": 50
+      },
+      {
+        "category": 1,
+        "name": "Category A",
+        "value": 30
+      },
+      {
+        "category": 1,
+        "name": "Category B",
+        "value": 20
+      },
+      {
+        "category": 1,
+        "name": "Category C",
+        "value": 10
+      },
+      {
+        "category": 1,
+        "name": "Category D",
+        "value": 30
+      },
+      {
+        "category": 2,
+        "name": "Homepage",
+        "value": 50
+      },
+      {
+        "category": 2,
+        "name": "Mobile Channel",
+        "value": 20
+      }
+    ],
+    "links": [
+      {
+        "source": "Search",
+        "target": "Category A",
+        "weight": 10,
+        "name": "dest"
+      },
+      {
+        "source": "Search",
+        "target": "Category B",
+        "weight": 14,
+        "name": "dest"
+      },
+      {
+        "source": "Search",
+        "target": "Category C",
+        "weight": 20,
+        "name": "dest"
+      },
+      {
+        "source": "Search",
+        "target": "Category D",
+        "weight": 30,
+        "name": "dest"
+      },
+      {
+        "source": "Homepage",
+        "target": "Search",
+        "weight": 30,
+        "name": "src"
+      },
+      {
+        "source": "Mobile Channel",
+        "target": "Search",
+        "weight": 20,
+        "name": "src"
+      }
+    ]
+  }
+}

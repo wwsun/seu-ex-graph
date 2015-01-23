@@ -18,7 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "*",
+    "bootstrap": "~3.3.2",
     "jquery": "*",
     "echarts": "~2.1.10"
   }

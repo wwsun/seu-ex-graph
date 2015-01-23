@@ -2,26 +2,109 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
     <title>Ex-Graph</title>
-
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/vendors/keen-dashboards.css">
     <link rel="stylesheet" href="styles/main.css">
 </head>
-<body>
+<body class="application">
 
-<div id="main"></div>
+<div id="app-wrapper">
+    <div id="app-toolbar">
+        <form>
+            <div class="row tools">
+                <div class="col-sm-2">
+                    <div class="tool analysis-model">
+                        <h5> &nbsp;Main Model</h5>
+                        <select class="form-control">
+                            <option value="force">Force Directed</option>
+                            <option value="chord">Chord Graph</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="tool second-model">
+                        <h5> &nbsp;Second Model</h5>
+                        <select class="form-control">
+                            <option value="force">Force Directed</option>
+                            <option value="chord">Chord Graph</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="line">Line Chart</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="tool filter-level">
+                        <h5> &nbsp;Filter Level</h5>
+                        <input type="number" step="any" id="coordinates-lng" class="form-control"
+                               placeholder="filter level">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="tool">
+                        <h5> &nbsp;Start time</h5>
+                        <input type="date" id="timeframe-start" class="form-control" placeholder="mm/dd/yyyy">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="tool">
+                        <h5> &nbsp;End time</h5>
+                        <input type="date" id="timeframe-end" class="form-control" placeholder="mm/dd/yyyy">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="tool">
+                        <h5>SEU - Graph Explorer</h5>
+                        <button id="refresh" class="btn btn-primary btn-block">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="main-area"></div>
+    <div id="app-sidebar">
+        <div class="chart-wrapper">
+            <div class="chart-title">
+                Second chart
+            </div>
+            <div class="chart-stage">
+                <div id="second" class="child-chart"></div>
+            </div>
+        </div>
+
+        <div class="chart-wrapper">
+            <div class="chart-title">
+                User Interests
+            </div>
+            <div class="chart-stage">
+                <div id="chart-02"></div>
+            </div>
+        </div>
+
+        <div class="chart-wrapper">
+            <div class="chart-title">
+                Flow Distribution
+            </div>
+            <div class="chart-stage">
+                <div id="chart-03"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/echarts/build/dist/echarts.js"></script>
 <script>
     require.config({
-       paths: {
-           echarts: '../bower_components/echarts/build/dist'
-       }
+        paths: {
+            echarts: '../bower_components/echarts/build/dist'
+        }
     });
 </script>
 
 <script src="scripts/main.js"></script>
-
 
 </body>
 </html>
