@@ -6,6 +6,10 @@
     height: 700px;
 }
 
+.child-panel {
+    height: 270px;
+}
+
 .child-chart {
     height: 300px;
 }

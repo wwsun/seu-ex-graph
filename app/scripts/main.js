@@ -14,17 +14,38 @@
         ],
         function(ec) {
 
+            var DEFAULTS = {
+                vis  : 'force',
+                ana  : 'link',
+                xAxis: 'navigation',
+                yAxis: 'product'
+            };
+
+            // DOM Elements
+            var mainArea        = document.getElementById('main-area');
+            var detailCenter    = document.getElementById('detail-funnel');
+            var detailDown      = document.getElementById('detail-pie');
+            var refreshButton   = document.getElementById('refresh');
+            var closeButton     = document.getElementById('detailPanelCloseBtn');
+
+            var toolbarForm     = $('#toolbar-form');
+            var analysisSelect  = $('#analysis-model');
+            var graphSelect     = $('#graph-model');
+
+            var childPanel      = $('#detail-area');
+            var childPanelTitle = $('#child-panel-title');
+
             var exGraph = {
                 ecConfig : require('echarts/config'),
 
                 //chart
-                mainChart : ec.init(document.getElementById('main-area')),
-                detailChart : ec.init(document.getElementById('detail-area')),
-                funnelChart : ec.init(document.getElementById('detail-funnel')),
-                pieChart : ec.init(document.getElementById('detail-pie')),
+                mainChart           : ec.init(mainArea),
+                //detailUpChart       : ec.init(detailUpper),
+                detailCenterChart   : ec.init(detailCenter),
+                detailDownChart     : ec.init(detailDown),
 
                 // chart option
-                mainChartOption : {
+                forceChartOption    : {
                     title : {
                         text: 'Main Graph',
                         x:'right',
@@ -35,7 +56,7 @@
                         formatter: '{a} : {b}'
                     },
                     color : [
-                        '#996699', '#9999CC', '#CCCCFF'
+                        //'#996699', '#9999CC', '#CCCCFF'
                     ],
                     toolbox: {
                         show : true,
@@ -94,7 +115,9 @@
                         }
                     ]
                 },
-                detailChartOption : {
+
+                // todo: one type one option
+                detailChartOption   : {
                     tooltip : {
                         trigger: 'item',
                         formatter: '{a} : {b}'
@@ -159,8 +182,8 @@
                             roam: 'move'
                         }
                     ]
-                },
-                funnelChartOption : {
+                },  // it is also a force chart for detail
+                funnelChartOption   : {
                     tooltip : {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c}%"
@@ -191,7 +214,7 @@
                         }
                     ]
                 },
-                pieChartOption : {
+                pieChartOption      : {
                     tooltip : {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -223,14 +246,125 @@
                 }
             };
 
-            initMainChart('./data/demo.json');
+            // App startup
+            appReady();
 
-            // init the main chart
+
+            /**
+             * Application execution logic
+             */
+            function appReady() {
+                // init the menu
+                initMenu();
+
+                // init with a default graph in the main area
+                initMainChart('./data/demo.json');
+
+                // get parameters
+                var vars = getParams();
+
+                // todo: refresh the graph
+                refreshGraph(vars);
+
+                // todo: wait for the user commands and handle them
+            }
+
+            function initMenu() {
+
+                // first level
+                for (var item in MENU.analysisModel) {
+                    analysisSelect.append('<option value="'+item+'">'+item+'</option>');
+                }
+
+                analysisSelect.change(function() {
+                    graphSelect.empty();
+                    var analysisModel = analysisSelect.val();
+                    var graphList = MENU.analysisModel[analysisModel].type;
+
+                    // second level
+                    for (var i= 0; i<graphList.length; i++) {
+                        graphSelect.append('<option value="'+graphList[i]+'">'+graphList[i]+'</option>');
+                    }
+                });
+
+                childPanel.hide();
+            }
+
+            /**
+             * Refresh the main chart based on the user's choice
+             * @param vars the parameter array
+             */
+            function refreshGraph(vars) {
+
+                var type    = vars.vis,
+                    model   = vars.ana,
+                    paramX  = vars.x,
+                    paramY  = vars.y,
+                    date    = vars.date;
+
+                // choose a graph
+                if(type==='force') {
+                    initMainChart('./data/demo.json');
+                } else if(type==='pie') {
+                    // todo: binding graph with test data
+
+                    if(model==='flow') {
+                        exGraph.pieChartOption.legend.data = [paramX, paramY];
+                        exGraph.pieChartOption.series[0].data = [{value:100, name:paramX}, {value:200, name:paramY}];
+                    }
+
+                    // todo: binding graph with option
+                    exGraph.mainChart.setOption(exGraph.pieChartOption, {notMerger: true});
+                } else if(type==='funnel') {
+
+                    exGraph.mainChart.setOption(exGraph.funnelChartOption, {notMerger: true});
+                }
+            }
+
+            function getNewGraph() {
+                // todo: move main graph to the smaller area
+                
+
+                // todo: generate the new graph
+            }
+
+            /**
+             * Read a page's GET URL variables and return them as an associative array.
+             * @returns {Array}
+             */
+            function getParams() {
+                var formContent = toolbarForm.serialize();
+                var vars = [], hash;
+                var hashes = formContent.split('&');
+                for (var i= 0; i<hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+
+            refreshButton.onclick = function() {
+                var vars = getParams();
+                refreshGraph(vars);
+            };
+
+            closeButton.onclick = function() {
+                childPanel.hide();
+            };
+
+
+
+
+            /**
+             * init the main chart
+             * @param request the file you want to request
+             */
             function initMainChart(request) {
                 $.getJSON(request, function(json){
-                    exGraph.mainChartOption.series[0].nodes = json.nodes;
-                    exGraph.mainChartOption.series[0].links = json.links;
-                    exGraph.mainChart.setOption(exGraph.mainChartOption);
+                    exGraph.forceChartOption.series[0].nodes = json.nodes;
+                    exGraph.forceChartOption.series[0].links = json.links;
+                    exGraph.mainChart.setOption(exGraph.forceChartOption, {notMerger:true});
                     exGraph.mainChart.on(exGraph.ecConfig.EVENT.CLICK, mainChartClickHandler);
                 });
             }
@@ -241,7 +375,7 @@
              */
             function mainChartClickHandler(param) {
                 var data = param.data;
-                var nodes = exGraph.mainChartOption.series[0].nodes;
+                var nodes = exGraph.forceChartOption.series[0].nodes;
                 if (
                     data.source !== undefined && data.target !== undefined
                 ) {
@@ -252,9 +386,13 @@
                 } else {
                     //setup for nodes
                     console.log("选中了" + data.name + '(' + data.value + ')');
-                    refreshDetailChart('./data/search.json', data.name);
-                    refreshConversationFunnel();
-                    refreshDistributionPie();
+
+                    childPanel.show();
+                    childPanelTitle.html("Choose a new analysis model for node <b>" + data.name +"</b>");
+                    //childPanel.toggle();
+                    //refreshDetailChart('./data/search.json', data.name);
+                    //refreshConversationFunnel();
+                    //refreshDistributionPie();
                 }
             }
 
@@ -268,18 +406,18 @@
                     if(json[name]){
                         exGraph.detailChartOption.series[0].nodes = json[name].nodes;
                         exGraph.detailChartOption.series[0].links = json[name].links;
-                        exGraph.detailChart.setOption(exGraph.detailChartOption);
-                        exGraph.detailChart.on(exGraph.ecConfig.EVENT.FORCE_LAYOUT_END);
+                        exGraph.detailUpChart.setOption(exGraph.detailChartOption);
+                        exGraph.detailUpChart.on(exGraph.ecConfig.EVENT.FORCE_LAYOUT_END);
                     }
                 });
             }
 
             function refreshConversationFunnel() {
-                exGraph.funnelChart.setOption(exGraph.funnelChartOption);
+                exGraph.detailCenterChart.setOption(exGraph.funnelChartOption);
             }
 
             function refreshDistributionPie() {
-                exGraph.pieChart.setOption(exGraph.pieChartOption);
+                exGraph.detailDownChart.setOption(exGraph.pieChartOption);
             }
 
         }

@@ -12,46 +12,47 @@
 
 <div id="app-wrapper">
     <div id="app-toolbar">
-        <form>
+        <form id="toolbar-form" method="post" onsubmit="return false;" action="#">
             <div class="row tools">
                 <div class="col-sm-2">
                     <div class="tool analysis-model">
-                        <h5> &nbsp;Main Model</h5>
-                        <select class="form-control">
-                            <option value="force">Force Directed</option>
-                            <option value="chord">Chord Graph</option>
+                        <h5> &nbsp;Analysis Model</h5>
+                        <select class="form-control" name="ana" id="analysis-model">
+                            <option>SELECT A MODEL</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="col-sm-2">
-                    <div class="tool second-model">
-                        <h5> &nbsp;Second Model</h5>
-                        <select class="form-control">
-                            <option value="force">Force Directed</option>
-                            <option value="chord">Chord Graph</option>
-                            <option value="bar">Bar Chart</option>
-                            <option value="line">Line Chart</option>
+                    <div class="tool visualization-model">
+                        <h5> &nbsp;Type</h5>
+                        <select class="form-control" name="vis" id="graph-model"></select>
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="tool x-axis">
+                        <h5> &nbsp;X axis</h5>
+                        <select class="form-control" name="x">
+                            <option value="navigationFlow">Navigation Flow</option>
+                            <option value="productFlow">Product Flow</option>
                         </select>
                     </div>
                 </div>
+
                 <div class="col-sm-2">
-                    <div class="tool filter">
-                        <h5> &nbsp;Filter</h5>
-                        <input type="number" step="any" id="model-filter" class="form-control"
-                               placeholder="filter level">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="tool">
-                        <h5> &nbsp;Model Level</h5>
-                        <input type="number" step="any" id="model-level" class="form-control"
-                               placeholder="filter level">
+                    <div class="tool y-axis">
+                        <h5> &nbsp;Y axis</h5>
+                        <select class="form-control" name="y">
+                            <option value="productFlow">Product Flow</option>
+                            <option value="navigationFlow">Navigation Flow</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="tool">
                         <h5> &nbsp;Date</h5>
-                        <input type="date" id="timeframe-end" class="form-control" placeholder="mm/dd/yyyy">
+                        <input type="date" id="timeframe-end" name="date" class="form-control" placeholder="mm/dd/yyyy">
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -67,11 +68,43 @@
     <div id="main-area"></div>
     <div id="app-sidebar">
         <div class="chart-wrapper">
-            <div class="chart-title">
-                Second chart
+            <div class="chart-title" id="child-panel-title">
+                Choose a new analysis model
             </div>
             <div class="chart-stage">
-                <div id="detail-area" class="child-chart"></div>
+                <div id="detail-area" class="child-panel">
+                    <form method="post" action="#" role="form" onsubmit="return false;">
+                        <div class="form-group">
+                            <h5>Analysis Model</h5>
+                            <select name="newAnalysisModel" class="form-control">
+                                <option value="force">Force Directed</option>
+                                <option value="line">Line Chart</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <h5>X axis</h5>
+                            <select name="newXAxis" class="form-control">
+                                <option value="people">People</option>
+                                <option value="flow">Flow</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <h5>Y axis</h5>
+                            <select name="newYAxis" class="form-control">
+                                <option value="people">People</option>
+                                <option value="flow">Flow</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-info col-sm-4">Sure</button>
+                            <button class="btn btn-default col-sm-offset-1 col-sm-4" id="detailPanelCloseBtn">Close</button>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -105,6 +138,7 @@
     });
 </script>
 
+<script src="scripts/menu.js"></script>
 <script src="scripts/main.js"></script>
 
 </body>
