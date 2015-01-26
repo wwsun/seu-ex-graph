@@ -27,8 +27,10 @@
             var detailDown      = document.getElementById('detail-pie');
             var refreshButton   = document.getElementById('refresh');
             var closeButton     = document.getElementById('detailPanelCloseBtn');
+            var detailButton    = document.getElementById('refreshDetailBtn');
 
             var toolbarForm     = $('#toolbar-form');
+            var detailForm      = $('#detail-form');
             var analysisSelect  = $('#analysis-model');
             var graphSelect     = $('#graph-model');
 
@@ -261,7 +263,7 @@
                 initMainChart('./data/demo.json');
 
                 // get parameters
-                var vars = getParams();
+                var vars = getParams(toolbarForm);
 
                 // todo: refresh the graph
                 refreshGraph(vars);
@@ -323,7 +325,7 @@
 
             function getNewGraph() {
                 // todo: move main graph to the smaller area
-                
+
 
                 // todo: generate the new graph
             }
@@ -332,8 +334,8 @@
              * Read a page's GET URL variables and return them as an associative array.
              * @returns {Array}
              */
-            function getParams() {
-                var formContent = toolbarForm.serialize();
+            function getParams(form) {
+                var formContent = form.serialize();
                 var vars = [], hash;
                 var hashes = formContent.split('&');
                 for (var i= 0; i<hashes.length; i++) {
@@ -345,7 +347,7 @@
             }
 
             refreshButton.onclick = function() {
-                var vars = getParams();
+                var vars = getParams(toolbarForm);
                 refreshGraph(vars);
             };
 
@@ -353,6 +355,10 @@
                 childPanel.hide();
             };
 
+            detailButton.onclick = function() {
+                var vars = getParams(detailForm);
+                refreshDetailChart(vars);
+            };
 
 
 
@@ -396,28 +402,36 @@
                 }
             }
 
-            /**
-             *
-             * @param request the file you want to get from server
-             * @param name the node name
-             */
-            function refreshDetailChart(request, name) {
-                $.getJSON(request, function(json){
-                    if(json[name]){
-                        exGraph.detailChartOption.series[0].nodes = json[name].nodes;
-                        exGraph.detailChartOption.series[0].links = json[name].links;
-                        exGraph.detailUpChart.setOption(exGraph.detailChartOption);
-                        exGraph.detailUpChart.on(exGraph.ecConfig.EVENT.FORCE_LAYOUT_END);
+            function refreshDetailChart(vars) {
+                var type = vars.newAnalysisModel,
+                    newX = vars.newXAxis,
+                    newY = vars.newYAxis;
+                console.log(type);
+
+                if(type === 'funnel') {
+                    exGraph.detailCenterChart.setOption(exGraph.funnelChartOption, {notMerger: true});
+                } else if(type === 'pie') {
+                    exGraph.detailCenterChart.setOption(exGraph.pieChartOption, {notMerger: true})
+                }
+            }
+
+            // todo: public function, which used to build the analysis model
+            function buildAnalysisModel(vars) {
+                var type  = vars.analysisModel,
+                    xAxis = vars.xAxis,
+                    yAxis = vars.yAxis;
+
+                if( type!== undefined && xAxis !== undefined && yAxis !== undefined ){
+                    if(type == 'force') {
+                        // todo:
+                    } else if(type == 'pie') {
+                        // todo:
                     }
-                });
-            }
 
-            function refreshConversationFunnel() {
-                exGraph.detailCenterChart.setOption(exGraph.funnelChartOption);
-            }
 
-            function refreshDistributionPie() {
-                exGraph.detailDownChart.setOption(exGraph.pieChartOption);
+
+                }
+
             }
 
         }

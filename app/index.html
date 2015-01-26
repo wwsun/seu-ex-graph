@@ -73,12 +73,13 @@
             </div>
             <div class="chart-stage">
                 <div id="detail-area" class="child-panel">
-                    <form method="post" action="#" role="form" onsubmit="return false;">
+                    <form method="post" action="#" role="form" onsubmit="return false;" id="detail-form">
                         <div class="form-group">
                             <h5>Analysis Model</h5>
                             <select name="newAnalysisModel" class="form-control">
                                 <option value="force">Force Directed</option>
-                                <option value="line">Line Chart</option>
+                                <option value="pie">Pie Chart</option>
+                                <option value="funnel">Funnel Chart</option>
                             </select>
                         </div>
 
@@ -99,7 +100,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button class="btn btn-info col-sm-4">Sure</button>
+                            <button class="btn btn-info col-sm-4" id="refreshDetailBtn">Sure</button>
                             <button class="btn btn-default col-sm-offset-1 col-sm-4" id="detailPanelCloseBtn">Close</button>
                         </div>
 

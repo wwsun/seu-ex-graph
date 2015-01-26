@@ -1,0 +1,21 @@
+#jumbotron {
+    margin-top: 8em;
+    text-align: center;
+}
+
+#jumbotron p {
+    font-size: 1.5em;
+    color: blue;
+}
+
+#main-area {
+    margin-top: 5em;
+}
+
+#main-viewer {
+    height: 550px;
+}
+
+.image-menu-item {
+    padding: 6px;
+}
