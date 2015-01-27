@@ -20,6 +20,8 @@
   "dependencies": {
     "bootstrap": "~3.3.2",
     "jquery": "*",
-    "echarts": "~2.1.10"
+    "echarts": "~2.1.10",
+    "tag-it": "aehlke/tag-it",
+    "jquery-ui": "1.9.2"
   }
 }

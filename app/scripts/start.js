@@ -3,6 +3,9 @@
  */
 
 (function($) {
+
+    var sampleTags = ['apple', 'iphone'];
+
     // DOM Element
     var insightBtn      = $("#insight-button");
     var insightForm     = $('#insight-form');
@@ -22,6 +25,12 @@
     tooltipPanel.on('mouseover', tooltipOverHandler)
         .on('mouseout', tooltipOutHandler);
 
+    $('#tooltip-tags').tagit({
+        availableTags: sampleTags,
+        singleField: true,
+        singleFieldNode: $('#tooltip-tags-display')
+    });
+
 
     // Event Handler
     function modelImageOverHandler(e) {
@@ -33,9 +42,6 @@
         } else {
             xcoord = position.left;
         }
-
-        console.log('mouse over '+ xcoord + "," +ycoord);
-
         tooltipPanel.css({ 'left': xcoord, 'top': ycoord, 'display': 'block'});
     }
 
@@ -46,6 +52,7 @@
     function tooltipOverHandler(e) {
         $(this).css('display','block');
     }
+
     function tooltipOutHandler(e) {
         var e = e.toElement || e.relatedTarget;
         if (e.parentNode == this || e.parentNode.parentNode == this || e.parentNode.parentNode.parentNode == this
@@ -55,31 +62,32 @@
         $(this).css('display','none');
     }
 
-
     function insightClickHandler() {
         var vars = getParams(insightForm);
         var type = vars['search-input'];
         var modelList = [];
+        var i = 0;
 
         modelImageList.empty(); // Empty all children
 
         if (type !== undefined) {
-            if (type === "website") {
+            if (type.match(/website/)) {
                 modelList = ["pie", "snake", "chord", "force"];
-
-                var i = 0;
-                for (; i < modelList.length; i++) {
-                    console.log(modelList[i]);
-                    modelImageList.append('<div class="col-md-3"><img src="../images/' + modelList[i] + '.png" class="img-rounded"></div>');
-                }
-            } else if (type === "flow") {
+            } else if (type.match(/flow/)) {
                 modelList = ["force", "line", "chord", "snake"];
-                var i = 0;
-                for (; i < modelList.length; i++) {
-                    console.log(modelList[i]);
-                    modelImageList.append('<div class="col-md-3"><img src="../images/' + modelList[i] + '.png" class="img-rounded"></div>');
-                }
+
+            } else if (type.match(/^http/)) {
+                modelList = ["heatmap"];
             }
+
+            for (i=0; i< modelList.length; i++) {
+                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?modelType='+
+                modelList[i]+'"><img src="../images/' + modelList[i] + '.png" class="img-rounded"></a></div>');
+            }
+
+            // Re-binding the mouse hover event
+            $('#model-image-list div').on('mouseover', modelImageOverHandler)
+                .on('mouseout', modelImageOutHandler);
         }
 
 
@@ -89,7 +97,6 @@
     // Add-on: auto-complete
     $.get('../data/suggestion_data.json', function (data) {
         $("#search-input").typeahead({source: data});
-        $('#tooltip-input').typeahead({source: data});
     }, 'json');
 
     /**

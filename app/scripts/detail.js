@@ -48,8 +48,27 @@
                         {
                             name:'访问来源',
                             type:'pie',
-                            radius : '55%',
-                            center: ['50%', '60%'],
+                            radius : ['50%', '70%'],
+                            itemStyle : {
+                                normal : {
+                                    label : {
+                                        show : false
+                                    },
+                                    labelLine : {
+                                        show : false
+                                    }
+                                },
+                                emphasis : {
+                                    label : {
+                                        show : true,
+                                        position : 'center',
+                                        textStyle : {
+                                            fontSize : '30',
+                                            fontWeight : 'bold'
+                                        }
+                                    }
+                                }
+                            },
                             data:[
                                 {value:335, name:'直接访问'},
                                 {value:310, name:'邮件营销'},
@@ -127,6 +146,7 @@
             };
 
 
+
             // Application logic
             function appReady() {
 
@@ -137,8 +157,27 @@
 
             // Application logic detail
             function getAnalysisResult() {
-                ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
-                ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
+
+                var vars = getUrlParams();
+                var type = vars['modelType'];
+
+                if(type !== undefined) {
+                    if(type === 'pie') {
+                        ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
+                        ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
+                    } else if(type ==='bar'){
+                        ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
+                    } else if(type ==='heatmap'){
+
+                    } else {
+
+                    }
+                } else {
+                    alert('Please choose a model!');
+                }
+
+                //ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
+                //ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
             }
 
             function refreshAnalysisResult(type) {
@@ -182,6 +221,20 @@
 
             // Execution logic
             appReady(); // application startup
+
+
+            // Util functions
+            function getUrlParams() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for(var i = 0; i < hashes.length; i++)
+                {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
         }
     )
 })(this.jQuery);
