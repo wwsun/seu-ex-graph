@@ -32,8 +32,10 @@
 
 <div class="container" role="main">
     <div id="jumbotron" class="row">
-        <p>可以理解别人吗？可以理解自己吗？</p>
-        <img src="../images/front.PNG" alt="Front Image" width="800">
+        <!--<p>可以理解别人吗？可以理解自己吗？</p>-->
+        <!--<p>To insight your website with viewLog!</p>-->
+        <!--<img src="../images/front.PNG" alt="Front Image" width="800">-->
+        <img src="../images/ifocus.png" alt="logo">
     </div>
 
     <div class="row">
@@ -49,7 +51,7 @@
                         <input type="text" data-provide="typeahead" id="search-input" name="search-input" class="form-control"
                               autocomplete="off" placeholder="Input what you want to see">
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" id="insight-button">Insight!</button>
+                            <button class="btn btn-primary btn-lg" id="insight-button">Insight!</button>
                         </span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-md-8 -->
@@ -61,14 +63,23 @@
         <br>
         <br>
         <br>
-        <br>
     </div>
 
-    <div class="row" id="model-image-list">
-            <div class="col-md-3"><img src="../images/chord.png" class="img-rounded"></div>
-            <div class="col-md-3"><img src="../images/line.png" class="img-rounded"></div>
-            <div class="col-md-3"><img src="../images/force.png" class="img-rounded"></div>
-            <div class="col-md-3"><img src="../images/snake.png" class="img-rounded"></div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row" id="model-image-list">
+                <div class="col-md-3"><img src="../images/chord.png" class="img-rounded"></div>
+                <div class="col-md-3"><img src="../images/line.png" class="img-rounded"></div>
+                <div class="col-md-3"><img src="../images/force.png" class="img-rounded"></div>
+                <div class="col-md-3"><img src="../images/snake.png" class="img-rounded"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tooltip-panel" style="display: none;">
+        <form role="form" action="#" method="get">
+            <input id="tooltip-input" type="text" class="form-control" placeholder="X as ?, Y as ?, Z as ? ...">
+        </form>
     </div>
 
 </div>

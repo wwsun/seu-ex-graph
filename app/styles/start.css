@@ -5,7 +5,7 @@
 
 #jumbotron p {
     font-size: 1.5em;
-    color: blue;
+    color: #428bca;
 }
 
 #main-area {
@@ -18,4 +18,18 @@
 
 .image-menu-item {
     padding: 6px;
+}
+
+#tooltip-panel {
+    display: block;
+    color: #414141;
+    background: #f1f1f1;
+    border: 1px solid #a9a9a9;
+    position: absolute;
+    z-index: 99999;
+    width: 530px;
+    padding: 6px 8px;
+    -webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    -moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
 }
