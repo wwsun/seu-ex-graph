@@ -4,11 +4,13 @@
 
 (function($) {
 
-    var sampleTags = ['apple', 'iphone'];
+    var sampleTags = ['apple phone', 'apple company', 'iphone'];
 
     // DOM Element
     var insightBtn      = $("#insight-button");
     var insightForm     = $('#insight-form');
+
+    var modelSelBtn     = $('#model-selection-button');
 
     var modelImageList  = $('#model-image-list');
 
@@ -18,6 +20,7 @@
 
     // Event binding
     insightBtn.click(insightClickHandler);
+    modelSelBtn.click(modelSelClickHandler);
 
     modelImageArr.on('mouseover', modelImageOverHandler)
         .on('mouseout', modelImageOutHandler);
@@ -34,6 +37,11 @@
 
     // Event Handler
     function modelImageOverHandler(e) {
+        var e = e.toElement || e.relatedTarget; // Get DOM element e.g. <img />
+        console.log(e.getAttribute('alt'));
+        //var tooltipTag = '<li>'+ e.getAttribute('alt')+'</li>';
+        //$('#tooltip-tags').html('').append(tooltipTag);
+
         var position    = $(this).offset();
         var ycoord      = position.top;
         var xcoord      = 0;
@@ -82,7 +90,7 @@
 
             for (i=0; i< modelList.length; i++) {
                 modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?modelType='+
-                modelList[i]+'"><img src="../images/' + modelList[i] + '.png" class="img-rounded"></a></div>');
+                modelList[i]+'"><img src="../images/' + modelList[i] + '.png" class="img-rounded" alt="'+modelList[i]+'"></a></div>');
             }
 
             // Re-binding the mouse hover event
@@ -92,6 +100,10 @@
 
 
         //console.log(vars);
+    }
+
+    function modelSelClickHandler(e) {
+        //var e = e.toElement || e.relatedTarget;
     }
 
     // Add-on: auto-complete

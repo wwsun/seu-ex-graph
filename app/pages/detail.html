@@ -77,20 +77,37 @@
 
                         <div class="form-group">
                             <h5>Clicked Item</h5>
-                            <input type="text" class="form-control" name="analysisItem" id="clicked-item-input">
+                            <input type="text" class="form-control" name="analysisItem" id="clicked-item-input" disabled>
                         </div>
 
                         <div class="form-group">
                             <h5>Analysis Model</h5>
-                            <select name="analysisModel" class="form-control">
-                                <option value="pie">Pie Chart</option>
-                                <option value="line">Line Chart</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <button class="btn btn-info col-sm-4" id="further-analysis-ok-btn">Sure</button>
-                            <button class="btn btn-default col-sm-offset-1 col-sm-4" id="further-analysis-close-btn">Close</button>
+                            <ul class="media-list" id="further-model-list">
+                                <li class="media image-menu-item">
+                                    <a class="media-left" href="#" name="bar">
+                                        <img src="../images/snake.png" width="70">
+                                    </a>
+                                    <div class="media-body">
+                                        Bar Graph
+                                    </div>
+                                </li>
+                                <li class="media image-menu-item">
+                                    <a class="media-left" href="#" name="chord">
+                                        <img src="../images/chord.png" width="70">
+                                    </a>
+                                    <div class="media-body">
+                                        Chord Graph
+                                    </div>
+                                </li>
+                                <li class="media image-menu-item">
+                                    <a class="media-left" href="#" name="force">
+                                        <img src="../images/force.png" width="70">
+                                    </a>
+                                    <div class="media-body">
+                                        Force Graph
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
 
                     </form>
