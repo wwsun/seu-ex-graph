@@ -84,14 +84,23 @@
             <div class="input-group">
                 <input name="tags" id="tooltip-tags-display" type="text" class="form-control" placeholder="X as ?, Y as ?, Z as ? ..." disabled>
                 <span class="input-group-btn">
+                    <button class="btn btn-default" id="search-btn">Good Luck</button>
                     <button class="btn btn-primary" id="model-selection-button">Submit</button>
                 </span>
             </div>
+
+            <br>
+            <div class="list-group" id="result-list"></div>
         </form>
     </div>
 
 </div>
 
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted text-center">Southeast University, Data&Intelligence Lab &copy; ALL RIGHTS RESERVED 2015</p>
+    </div>
+</footer>
 
 <!--javascript dependencies-->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
@@ -100,6 +109,7 @@
 
 <script src="../../bower_components/tag-it/js/tag-it.min.js"></script>
 <script src="../scripts/vendors/bootstrap3-typeahead.js"></script>
+
 <script src="../scripts/start.js"></script>
 </body>
 </html>

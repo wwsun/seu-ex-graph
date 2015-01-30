@@ -2,20 +2,27 @@
  * Created by Weiwei on 2015/1/26.
  */
 
-(function($) {
+(function ($) {
 
     var sampleTags = ['apple phone', 'apple company', 'iphone'];
+    var data = [
+        "导航关注度",
+        "浏览关注度",
+        "搜索关注度",
+        "浏览量分布",
+        "用户分布"
+    ];
 
     // DOM Element
-    var insightBtn      = $("#insight-button");
-    var insightForm     = $('#insight-form');
+    var insightBtn = $("#insight-button");
+    var insightForm = $('#insight-form');
 
-    var modelSelBtn     = $('#model-selection-button');
+    var modelSelBtn = $('#model-selection-button');
 
-    var modelImageList  = $('#model-image-list');
+    var modelImageList = $('#model-image-list');
 
-    var modelImageArr   = $('#model-image-list div img');
-    var tooltipPanel    = $('#tooltip-panel');
+    var modelImageArr = $('#model-image-list div img');
+    var tooltipPanel = $('#tooltip-panel');
 
 
     // Event binding
@@ -28,37 +35,38 @@
     tooltipPanel.on('mouseover', tooltipOverHandler)
         .on('mouseout', tooltipOutHandler);
 
+
     $('#tooltip-tags').tagit({
         availableTags: sampleTags,
         singleField: true,
         singleFieldNode: $('#tooltip-tags-display')
     });
 
+    $('#search-btn').on('click', searchClickHandler);
 
     // Event Handler
     function modelImageOverHandler(e) {
-        var e = e.toElement || e.relatedTarget; // Get DOM element e.g. <img />
-        console.log(e.getAttribute('alt'));
-        //var tooltipTag = '<li>'+ e.getAttribute('alt')+'</li>';
-        //$('#tooltip-tags').html('').append(tooltipTag);
+        var ele = e.toElement || e.relatedTarget; // Get DOM element e.g. <img />
+        //console.log(e.getAttribute('alt'));
+        localStorage.setItem("currentHoverItem", ele.getAttribute('alt')); //store hover information to localStorage
 
-        var position    = $(this).offset();
-        var ycoord      = position.top;
-        var xcoord      = 0;
-        if(position.left / $(window).width() >= 0.5) {
+        var position = $(this).offset();
+        var ycoord = position.top;
+        var xcoord = 0;
+        if (position.left / $(window).width() >= 0.5) {
             xcoord = position.left - 530;
         } else {
             xcoord = position.left;
         }
-        tooltipPanel.css({ 'left': xcoord, 'top': ycoord, 'display': 'block'});
+        tooltipPanel.css({'left': xcoord, 'top': ycoord, 'display': 'block'});
     }
 
     function modelImageOutHandler(e) {
-        tooltipPanel.css('display','none');
+        tooltipPanel.css('display', 'none');
     }
 
     function tooltipOverHandler(e) {
-        $(this).css('display','block');
+        $(this).css('display', 'block');
     }
 
     function tooltipOutHandler(e) {
@@ -67,7 +75,8 @@
             || e == this || e.nodeName == 'IMG') {
             return;
         }
-        $(this).css('display','none');
+        $(this).css('display', 'none');
+        $('#result-list').html('');
     }
 
     function insightClickHandler() {
@@ -88,9 +97,9 @@
                 modelList = ["heatmap"];
             }
 
-            for (i=0; i< modelList.length; i++) {
-                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?modelType='+
-                modelList[i]+'"><img src="../images/' + modelList[i] + '.png" class="img-rounded" alt="'+modelList[i]+'"></a></div>');
+            for (i = 0; i < modelList.length; i++) {
+                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?modelType=' +
+                modelList[i] + '"><img src="../images/' + modelList[i] + '.png" class="img-rounded" alt="' + modelList[i] + '"></a></div>');
             }
 
             // Re-binding the mouse hover event
@@ -104,6 +113,40 @@
 
     function modelSelClickHandler(e) {
         //var e = e.toElement || e.relatedTarget;
+    }
+
+    function searchClickHandler(e) {
+        var searchStrArr = $('#tooltip-tags-display').val().split(',');
+        var tempArr = [];
+        var result = new Array();
+        var resultStr = '';
+
+        for (var k = 0; k < searchStrArr.length; k++) {
+
+            var searchStr = searchStrArr[k];
+
+            for (var i = 0; i < data.length; i++) {
+                tempArr[i] = [];
+                tempArr[i].push(levenshtein(searchStr, data[i]));
+                tempArr[i].push(data[i]);
+            }
+
+            result[k] = tempArr.sort(function (a, b) {
+                return a[0] - b[0];
+            });
+            tempArr = [];
+
+        }
+
+        for (var j = 0; j < result[0].length; j++) {
+            if(result[0][j][1]!==result[1][j][1]) {
+                resultStr += '<a class="list-group-item">你指的是 <strong>' + result[0][j][1] + '</strong>, <strong>'
+                + result[1][j][1] + '</strong> 吗？</a>';
+            }
+        }
+
+        $('#result-list').html(resultStr);
+
     }
 
     // Add-on: auto-complete
@@ -125,6 +168,28 @@
             vars[hash[0]] = hash[1];
         }
         return vars;
+    }
+
+    function levenshtein(a, b) {
+
+        var al = a.length + 1;
+        var bl = b.length + 1;
+        var result = [];
+        var temp = 0;
+
+        for (var i = 0; i < al; result[i] = [i++]) {
+        }
+        for (var i = 0; i < bl; result[0][i] = i++) {
+        }
+
+        for (i = 1; i < al; i++) {
+            for (var j = 1; j < bl; j++) {
+                temp = a[i - 1] == b[j - 1] ? 0 : 1;
+                result[i][j] = Math.min(result[i - 1][j] + 1, result[i][j - 1] + 1, result[i - 1][j - 1] + temp);
+            }
+        }
+
+        return result[i - 1][j - 1];
     }
 
 })(this.jQuery);
