@@ -3,10 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>iFocus - admin page</title>
-    <link rel="stylesheet" href="../styles/start.css">
     <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/start.css">
 </head>
 <body>
+
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -31,31 +32,26 @@
 
 <div class="container" role="main" id="main-area">
 
+    <!--analysis history-->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Analysis History</h3></div>
                 <div class="panel-body">
-                    <div class="col-md-3">
-                        <img src="../images/snake.png">
-                    </div>
-                    <div class="col-md-3">
-                        <img src="../images/force.png">
-                    </div>
-                    <div class="col-md-3">
-                        <img src="../images/line.png">
-                    </div>
-                    <div class="col-md-3">
-                        <img src="../images/chord.png">
+                    <div class="col-md-12">
+                        <img src="../images/snake.png" class="img-rounded" height="90">
+                        <img src="../images/force.png" class="img-rounded" height="90">
+                        <img src="../images/line.png" class="img-rounded" height="90">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--analysis panel-->
     <div class="row">
         <div class="col-md-8">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Analysis Viewer</h3></div>
                 <div class="panel-body" id="main-viewer">
                     Panel content
@@ -63,7 +59,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Other available models</h3></div>
                 <ul class="media-list" id="model-list">
                     <li class="media image-menu-item">
@@ -93,43 +89,12 @@
                 </ul>
             </div>
 
-            <div class="panel panel-primary">
-                <div class="panel-heading"><h3 class="panel-title">New model for further analysis</h3></div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title" id="further-analysis-panel-header">New model for further analysis</h3></div>
                 <div class="panel-body">
                     <form method="post" action="#" role="form" onsubmit="return false;" id="further-analysis-form">
-
                         <div class="form-group">
-                            <h5>Clicked Item</h5>
-                            <input type="text" class="form-control" name="analysisItem" id="clicked-item-input" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <h5>Analysis Model</h5>
                             <ul class="media-list" id="further-model-list">
-                                <li class="media image-menu-item">
-                                    <a class="media-left" href="#" name="bar">
-                                        <img src="../images/snake.png" width="70">
-                                    </a>
-                                    <div class="media-body">
-                                        Bar Graph
-                                    </div>
-                                </li>
-                                <li class="media image-menu-item">
-                                    <a class="media-left" href="#" name="chord">
-                                        <img src="../images/chord.png" width="70">
-                                    </a>
-                                    <div class="media-body">
-                                        Chord Graph
-                                    </div>
-                                </li>
-                                <li class="media image-menu-item">
-                                    <a class="media-left" href="#" name="force">
-                                        <img src="../images/force.png" width="70">
-                                    </a>
-                                    <div class="media-body">
-                                        Force Graph
-                                    </div>
-                                </li>
                             </ul>
                         </div>
 
@@ -140,7 +105,6 @@
     </div>
 
 </div>
-
 
 <!--Javascript dependencies-->
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>

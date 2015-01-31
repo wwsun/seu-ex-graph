@@ -1,0 +1,20 @@
+{
+  "product": {
+    "models":["bar", "pie", "chord"],
+    "data":[
+      {"name":"China", "value":500},
+      {"name":"Japan", "value":400},
+      {"name":"USA", "value": 600},
+      {"name":"France", "value":400}
+    ]
+  },
+  "navigation": {
+    "models":["bar", "pie", "force"],
+    "data":[
+      {"name":"China", "value":600},
+      {"name":"Japan", "value":800},
+      {"name":"USA", "value": 200},
+      {"name":"France", "value":600}
+    ]
+  }
+}

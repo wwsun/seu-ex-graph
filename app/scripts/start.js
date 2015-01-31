@@ -6,11 +6,10 @@
 
     var sampleTags = ['apple phone', 'apple company', 'iphone'];
     var data = [
-        "导航关注度",
-        "浏览关注度",
-        "搜索关注度",
-        "浏览量分布",
-        "用户分布"
+        "navigation",
+        "product",
+        "search",
+        "browse"
     ];
 
     // DOM Element
@@ -98,7 +97,7 @@
             }
 
             for (i = 0; i < modelList.length; i++) {
-                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?modelType=' +
+                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?model=' +
                 modelList[i] + '"><img src="../images/' + modelList[i] + '.png" class="img-rounded" alt="' + modelList[i] + '"></a></div>');
             }
 
@@ -115,6 +114,10 @@
         //var e = e.toElement || e.relatedTarget;
     }
 
+    /**
+     * GOOD LUCK: fuzzy query
+     * @param e
+     */
     function searchClickHandler(e) {
         var searchStrArr = $('#tooltip-tags-display').val().split(',');
         var tempArr = [];
@@ -127,7 +130,7 @@
 
             for (var i = 0; i < data.length; i++) {
                 tempArr[i] = [];
-                tempArr[i].push(levenshtein(searchStr, data[i]));
+                tempArr[i].push(getSentenceLength(searchStr, data[i]));
                 tempArr[i].push(data[i]);
             }
 
@@ -139,14 +142,16 @@
         }
 
         for (var j = 0; j < result[0].length; j++) {
-            if(result[0][j][1]!==result[1][j][1]) {
-                resultStr += '<a class="list-group-item">你指的是 <strong>' + result[0][j][1] + '</strong>, <strong>'
-                + result[1][j][1] + '</strong> 吗？</a>';
+            var paramX = result[0][j][1],
+                paramY = result[1][j][1];
+            var currentModel = localStorage.getItem('currentHoverItem');
+            if(paramX !== paramY) {
+                resultStr += '<a class="list-group-item" href="detail.html?model='+currentModel+'&x='+paramX+'&y='+paramY
+                +'">你指的是 <strong>' + paramX + '</strong>, <strong>' + paramY + '</strong> 吗？</a>';
             }
         }
 
         $('#result-list').html(resultStr);
-
     }
 
     // Add-on: auto-complete
@@ -170,7 +175,7 @@
         return vars;
     }
 
-    function levenshtein(a, b) {
+    function getSentenceLength(a, b) {
 
         var al = a.length + 1;
         var bl = b.length + 1;

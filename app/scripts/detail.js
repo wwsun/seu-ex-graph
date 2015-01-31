@@ -2,7 +2,7 @@
  * Created by Weiwei on 2015/1/26.
  */
 
-(function($) {
+(function ($) {
     require(
         [
             'echarts',
@@ -17,134 +17,133 @@
 
 
             // DOM Elements
-            var mainViewer      = document.getElementById('main-viewer');
+            var mainViewer = document.getElementById('main-viewer');
 
-            var clickedItem     = $('#clicked-item-input');
-            var modelList       = $('#model-list li a');
+            var furtherTitle = $('#further-analysis-panel-header');
+            var modelList = $('#model-list li a');
 
             var furtherAnalysisForm = $('#further-analysis-form');
             var furtherAnalysisOkBtn = $('#further-analysis-ok-btn');
 
             // Graph Parameters
             var ecGraph = {
-                ecConfig    : require('echarts/config'),
-                mainViewer  : ec.init(mainViewer),
+                ecConfig: require('echarts/config'),
+                mainViewer: ec.init(mainViewer),
 
-                pieOption   : {
-                    tooltip : {
+                pieOption: {
+                    tooltip: {
                         trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
-                        orient : 'vertical',
-                        x : 'left',
-                        data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
                     },
                     toolbox: {
-                        show : false
+                        show: false
                     },
-                    calculable : true,
-                    series : [
+                    calculable: true,
+                    series: [
                         {
-                            name:'访问来源',
-                            type:'pie',
-                            radius : ['50%', '70%'],
-                            itemStyle : {
-                                normal : {
-                                    label : {
-                                        show : false
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: false
                                     },
-                                    labelLine : {
-                                        show : false
+                                    labelLine: {
+                                        show: false
                                     }
                                 },
-                                emphasis : {
-                                    label : {
-                                        show : true,
-                                        position : 'center',
-                                        textStyle : {
-                                            fontSize : '30',
-                                            fontWeight : 'bold'
+                                emphasis: {
+                                    label: {
+                                        show: true,
+                                        position: 'center',
+                                        textStyle: {
+                                            fontSize: '30',
+                                            fontWeight: 'bold'
                                         }
                                     }
                                 }
                             },
-                            data:[
-                                {value:335, name:'直接访问'},
-                                {value:310, name:'邮件营销'},
-                                {value:234, name:'联盟广告'},
-                                {value:135, name:'视频广告'},
-                                {value:1548, name:'搜索引擎'}
+                            data: [
+                                {value: 335, name: '直接访问'},
+                                {value: 310, name: '邮件营销'},
+                                {value: 234, name: '联盟广告'},
+                                {value: 135, name: '视频广告'},
+                                {value: 1548, name: '搜索引擎'}
                             ]
                         }
                     ]
                 },
-                barOption : {
-                    tooltip : {
+                barOption: {
+                    tooltip: {
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['导航流量','产品流量']
+                        data: ['导航流量', '产品流量']
                     },
                     toolbox: {
-                        show : true,
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            magicType : {show: true, type: ['line', 'bar']},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
                         }
                     },
-                    calculable : true,
-                    xAxis : [
+                    calculable: true,
+                    xAxis: [
                         {
-                            type : 'category',
-                            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                            type: 'category',
+                            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
                         }
                     ],
-                    yAxis : [
+                    yAxis: [
                         {
-                            type : 'value'
+                            type: 'value'
                         }
                     ],
-                    series : [
+                    series: [
                         {
-                            name:'导航流量',
-                            type:'bar',
-                            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-                            markPoint : {
-                                data : [
-                                    {type : 'max', name: '最大值'},
-                                    {type : 'min', name: '最小值'}
+                            name: '导航流量',
+                            type: 'bar',
+                            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name: '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         },
                         {
-                            name:'产品流量',
-                            type:'bar',
-                            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                            markPoint : {
-                                data : [
-                                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-                                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                            name: '产品流量',
+                            type: 'bar',
+                            data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                            markPoint: {
+                                data: [
+                                    {name: '年最高', value: 182.2, xAxis: 7, yAxis: 183, symbolSize: 18},
+                                    {name: '年最低', value: 2.3, xAxis: 11, yAxis: 3}
                                 ]
                             },
-                            markLine : {
-                                data : [
-                                    {type : 'average', name : '平均值'}
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
                                 ]
                             }
                         }
                     ]
                 }
             };
-
 
 
             // Application logic
@@ -159,33 +158,43 @@
             function getAnalysisResult() {
 
                 var vars = getUrlParams();
-                var type = vars['modelType'];
+                var type = vars['model'],
+                    paramX = vars['x'],
+                    paramY = vars['y'];
+                var returnData = [];
 
-                if(type !== undefined) {
-                    if(type === 'pie') {
-                        ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
-                        ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
-                    } else if(type ==='bar'){
-                        ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
-                    } else if(type ==='heatmap'){
+                $.getJSON('../data/demo-model.json', function (json) {
+                    returnData = json['result'];
 
+                    if (type !== undefined) {
+                        // TODO: analysis the model and its parameters
+
+                        if (type === 'pie') {
+                            ecGraph.pieOption.legend.data = [paramX, paramY];
+                            ecGraph.pieOption.series[0].data = returnData;
+                            ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
+                            ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
+                        } else if (type === 'bar') {
+                            ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
+                        } else if (type === 'heatmap') {
+
+                        } else {
+
+                        }
                     } else {
-
+                        alert('Please choose a model!');
                     }
-                } else {
-                    alert('Please choose a model!');
-                }
+                });
 
-                //ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
-                //ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
+
             }
 
             function refreshAnalysisResult(type) {
-                if(type === 'pie') {
+                if (type === 'pie') {
                     ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
-                } else if(type === 'bar') {
+                } else if (type === 'bar') {
                     ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
-                } else if(type === 'force') {
+                } else if (type === 'force') {
 
                 } else {
 
@@ -194,7 +203,7 @@
             }
 
             // Event Binding
-            modelList.each(function(){
+            modelList.each(function () {
                 $(this).click(modelSelectHandler);
             });
 
@@ -204,13 +213,29 @@
 
             function mainViewerClickHandler(param) {
                 var data = param.data;
-                console.log("You click the "+ data.name);
-                clickedItem.val(data.name);
+                console.log("You click the " + data.name);
+                localStorage.setItem("furtherData", data.name);
+
+                $.getJSON('../data/model-graph.json', function (json) {
+
+                    var result = json[data.name]['models'];
+
+                    for (var i = 0; i < result.length; i++) {
+                        var modelItem = $('<li class="media image-menu-item"><a class="media-left" ' +
+                        'href="detail.html?model=' + result[i] + '&x=' + data.name + '" name="' + result[i] + '">' +
+                        '<img src="../images/' + result[i] + '.png" width="70"></a><div class="media-body">' +
+                        result[i] + ' Graph</div></li>');
+                        $("#further-model-list").append(modelItem);
+                    }
+
+                });
+
+                furtherTitle.html("Further analysis for <strong>" + data.name + "</strong>");
             }
 
             function modelSelectHandler(param) {
                 var data = $(this).attr('name');
-               refreshAnalysisResult(data);
+                refreshAnalysisResult(data);
             }
 
             function faOkHandler() {
@@ -227,8 +252,7 @@
             function getUrlParams() {
                 var vars = [], hash;
                 var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-                for(var i = 0; i < hashes.length; i++)
-                {
+                for (var i = 0; i < hashes.length; i++) {
                     hash = hashes[i].split('=');
                     vars.push(hash[0]);
                     vars[hash[0]] = hash[1];
