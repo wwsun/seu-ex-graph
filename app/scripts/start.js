@@ -97,8 +97,8 @@
             }
 
             for (i = 0; i < modelList.length; i++) {
-                modelImageList.append('<div class="col-md-3"><a href="../pages/detail.html?model=' +
-                modelList[i] + '"><img src="../images/' + modelList[i] + '.png" class="img-rounded" alt="' + modelList[i] + '"></a></div>');
+                modelImageList.append('<div class="col-md-3"><a href="/pages/detail.html?model=' +
+                modelList[i] + '"><img src="images/' + modelList[i] + '.png" class="img-rounded" alt="' + modelList[i] + '"></a></div>');
             }
 
             // Re-binding the mouse hover event
@@ -146,7 +146,7 @@
                 paramY = result[1][j][1];
             var currentModel = localStorage.getItem('currentHoverItem');
             if(paramX !== paramY) {
-                resultStr += '<a class="list-group-item" href="detail.html?model='+currentModel+'&x='+paramX+'&y='+paramY
+                resultStr += '<a class="list-group-item" href="pages/detail.html?model='+currentModel+'&x='+paramX+'&y='+paramY
                 +'">你指的是 <strong>' + paramX + '</strong>, <strong>' + paramY + '</strong> 吗？</a>';
             }
         }
@@ -155,7 +155,7 @@
     }
 
     // Add-on: auto-complete
-    $.get('../data/suggestion_data.json', function (data) {
+    $.get('data/suggestion_data.json', function (data) {
         $("#search-input").typeahead({source: data});
     }, 'json');
 

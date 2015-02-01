@@ -1,0 +1,12 @@
+{
+  "countries": {
+    "names": ["China","Japan","USA","France"],
+    "avgProduct": [100, 90, 120, 60],
+    "avgCategory": [110, 200, 300, 150]
+  },
+  "region": {
+    "names": ["Eastern", "Western"],
+    "avgProduct": [95, 90],
+    "avgCategory": [205, 750]
+  }
+}

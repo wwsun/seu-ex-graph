@@ -2,145 +2,114 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
-    <title>Ex-Graph</title>
+    <title>iFocus - to insight your website! </title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles/vendors/keen-dashboards.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="../bower_components/jquery-ui/themes/start/jquery-ui.css">
+    <link rel="stylesheet" href="../bower_components/tag-it/css/jquery.tagit.css">
+    <link rel="stylesheet" href="styles/start.css">
 </head>
-<body class="application">
+<body>
 
-<div id="app-wrapper">
-    <div id="app-toolbar">
-        <form id="toolbar-form" method="post" onsubmit="return false;" action="#">
-            <div class="row tools">
-                <div class="col-sm-2">
-                    <div class="tool analysis-model">
-                        <h5> &nbsp;Analysis Model</h5>
-                        <select class="form-control" name="ana" id="analysis-model">
-                            <option>SELECT A MODEL</option>
-                        </select>
-                    </div>
-                </div>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">D & Intel Lab</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="pages/detail.html">Admin</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
 
-                <div class="col-sm-2">
-                    <div class="tool visualization-model">
-                        <h5> &nbsp;Type</h5>
-                        <select class="form-control" name="vis" id="graph-model"></select>
-                    </div>
-                </div>
+<div class="container" role="main">
+    <div id="jumbotron" class="row">
+        <!--<p>可以理解别人吗？可以理解自己吗？</p>-->
+        <!--<p>To insight your website with viewLog!</p>-->
+        <!--<img src="../images/front.PNG" alt="Front Image" width="800">-->
+        <a href="index.html" ><img src="images/ifocus.png" alt="logo"></a>
+    </div>
 
-                <div class="col-sm-2">
-                    <div class="tool x-axis">
-                        <h5> &nbsp;X axis</h5>
-                        <select class="form-control" name="x">
-                            <option value="navigationFlow">Navigation Flow</option>
-                            <option value="productFlow">Product Flow</option>
-                        </select>
-                    </div>
-                </div>
+    <div class="row">
+        <br />
+        <br />
+    </div>
 
-                <div class="col-sm-2">
-                    <div class="tool y-axis">
-                        <h5> &nbsp;Y axis</h5>
-                        <select class="form-control" name="y">
-                            <option value="productFlow">Product Flow</option>
-                            <option value="navigationFlow">Navigation Flow</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="tool">
-                        <h5> &nbsp;Date</h5>
-                        <input type="date" id="timeframe-end" name="date" class="form-control" placeholder="mm/dd/yyyy">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="tool">
-                        <h5>SEU - Graph Explorer</h5>
-                        <button id="refresh" class="btn btn-primary btn-block">Refresh</button>
-                    </div>
-                </div>
+    <div class="row">
+        <form role="form" class="form-horizontal" method="post" action="#" onsubmit="return false;" id="insight-form">
+            <div class="form-group-lg">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="input-group">
+                        <input type="text" data-provide="typeahead" id="search-input" name="search-input" class="form-control"
+                              autocomplete="off" placeholder="Input what you want to see">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-lg" id="insight-button">Insight!</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-md-8 -->
             </div>
         </form>
     </div>
 
-    <div id="main-area"></div>
-    <div id="app-sidebar">
-        <div class="chart-wrapper">
-            <div class="chart-title" id="child-panel-title">
-                Choose a new analysis model
-            </div>
-            <div class="chart-stage">
-                <div id="detail-area" class="child-panel">
-                    <form method="post" action="#" role="form" onsubmit="return false;" id="detail-form">
-                        <div class="form-group">
-                            <h5>Analysis Model</h5>
-                            <select name="newAnalysisModel" class="form-control">
-                                <option value="force">Force Directed</option>
-                                <option value="pie">Pie Chart</option>
-                                <option value="funnel">Funnel Chart</option>
-                            </select>
-                        </div>
+    <div class="row">
+        <br>
+        <br>
+        <br>
+    </div>
 
-                        <div class="form-group">
-                            <h5>X axis</h5>
-                            <select name="newXAxis" class="form-control">
-                                <option value="people">People</option>
-                                <option value="flow">Flow</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <h5>Y axis</h5>
-                            <select name="newYAxis" class="form-control">
-                                <option value="people">People</option>
-                                <option value="flow">Flow</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <button class="btn btn-info col-sm-4" id="refreshDetailBtn">Sure</button>
-                            <button class="btn btn-default col-sm-offset-1 col-sm-4" id="detailPanelCloseBtn">Close</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="chart-wrapper">
-            <div class="chart-title">
-                Conversation
-            </div>
-            <div class="chart-stage">
-                <div id="detail-funnel" class="child-chart"></div>
-            </div>
-        </div>
-
-        <div class="chart-wrapper">
-            <div class="chart-title">
-                Flow Distribution
-            </div>
-            <div class="chart-stage">
-                <div id="detail-pie" class="child-chart"></div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row" id="model-image-list">
+                <div class="col-md-3"><img src="images/chord.png" class="img-rounded" alt="chord"></div>
+                <div class="col-md-3"><img src="images/line.png" class="img-rounded" alt="line"></div>
+                <div class="col-md-3"><img src="images/force.png" class="img-rounded" alt="force"></div>
+                <div class="col-md-3"><img src="images/snake.png" class="img-rounded" alt="snake"></div>
             </div>
         </div>
     </div>
+
+    <div id="tooltip-panel" style="display: none;">
+        <form role="form" action="#" method="get">
+            <ul id="tooltip-tags"></ul>
+            <div class="input-group">
+                <input name="tags" id="tooltip-tags-display" type="text" class="form-control" placeholder="X as ?, Y as ?, Z as ? ..." disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" id="search-btn">Good Luck</button>
+                    <button class="btn btn-primary" id="model-selection-button">Submit</button>
+                </span>
+            </div>
+
+            <br>
+            <div class="list-group" id="result-list"></div>
+        </form>
+    </div>
+
 </div>
 
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted text-center">Copyright &copy; 2015 Data&Intelligence Lab, Southeast University. ALL RIGHTS RESERVED</p>
+    </div>
+</footer>
+
+<!--javascript dependencies-->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../bower_components/echarts/build/dist/echarts.js"></script>
-<script>
-    require.config({
-        paths: {
-            echarts: '../bower_components/echarts/build/dist'
-        }
-    });
-</script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 
-<script src="scripts/menu.js"></script>
-<script src="scripts/main.js"></script>
+<script src="../bower_components/tag-it/js/tag-it.min.js"></script>
+<script src="scripts/vendors/bootstrap3-typeahead.js"></script>
 
+<script src="scripts/start.js"></script>
 </body>
 </html>

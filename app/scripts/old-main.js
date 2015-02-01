@@ -117,7 +117,6 @@
                         }
                     ]
                 },
-
                 // todo: one type one option
                 detailChartOption   : {
                     tooltip : {
