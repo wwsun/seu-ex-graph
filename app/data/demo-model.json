@@ -2,5 +2,9 @@
   "result": [
     {"name":"product", "value":500},
     {"name":"navigation", "value":1000}
-  ]
+  ],
+  "result2": {
+    "legendData": ["product", "navigation"],
+    "seriesData": [500, 1000]
+  }
 }

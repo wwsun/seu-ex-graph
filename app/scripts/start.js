@@ -97,7 +97,7 @@
             }
 
             for (i = 0; i < modelList.length; i++) {
-                modelImageList.append('<div class="col-md-3"><a href="/pages/detail.html?model=' +
+                modelImageList.append('<div class="col-md-3"><a href="pages/detail.html?model=' +
                 modelList[i] + '"><img src="images/' + modelList[i] + '.png" class="img-rounded" alt="' + modelList[i] + '"></a></div>');
             }
 

@@ -15,6 +15,9 @@
         ],
         function (ec) {
 
+            // Model predication dialog
+            var dialog;
+
             // DOM Elements
             var mainViewer = document.getElementById('main-viewer');
 
@@ -144,14 +147,23 @@
 
                 // TODO: query from database (x, y)
 
-                $.getJSON('../data/demo-model.json',function (json) {
-                    returnData.seriesData = json['result'];
-                    if (model !== undefined) {
-                        setGraphModel(model, returnData);
-                    } else {
-                        console.log("No model!!!");
-                    }
-                })
+                if (model === 'heatmap') {
+                    console.log(">>>"+model);
+                    setGraphModel(model, null);
+                } else {
+                    $.getJSON('../data/demo-model.json',function (json) {
+
+                        localStorage.setItem('currentData',JSON.stringify(json['result2']));//store data for bar graph
+
+                        returnData.seriesData = json['result'];
+
+                        if (model !== undefined) {
+                            setGraphModel(model, returnData);
+                        } else {
+                            console.log("No model!!!");
+                        }
+                    })
+                }
             }
 
             function refreshMainViewer() {
@@ -189,21 +201,34 @@
                     ecGraph.mainViewer.setOption(ecGraph.pieOption, {notMerger: true});
                     ecGraph.mainViewer.on(ecGraph.ecConfig.EVENT.CLICK, mainViewerClickHandler);
                 } else if (model ==='bar') {
-
-                    console.log(returnData.names);
                     ecGraph.barOption.xAxis[0].data = returnData.names;
-                    ecGraph.barOption.series[0].data = returnData['avgProduct'];
-                    ecGraph.barOption.series[1].data = returnData['avgCategory'];
+
+                    if (returnData['avgProduct'] === undefined) {
+                        ecGraph.barOption.series[0].name = "Share";
+                        ecGraph.barOption.series[0].data = returnData['seriesData'];
+                        ecGraph.barOption.series[1] = {};
+                    } else {
+                        ecGraph.barOption.series[0].data = returnData['avgProduct'];
+                        ecGraph.barOption.series[1].data = returnData['avgCategory'];
+                    }
+
                     ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
+                } else if (model == 'heatmap') {
+                    $('#main-viewer').hide();
+                    $('#main-viewer2').append('<img src="../images/heatmap-dmeo.jpg" width="700">');
                 } else {
 
                 }
             }
 
             function setHistoryPanel() {
-                $('#analysis-history').empty();
-                for(var i=0; i<operationHistory.length; i++){
-                    $('#analysis-history').append('<img src="../images/'+operationHistory[i]+'.png" class="img-rounded" height="90">');
+
+                var analysisHistory = $('#analysis-history');
+
+                analysisHistory.empty();
+                for(var i=0; i < operationHistory.length - 1; i++){
+                    analysisHistory.append('<div class="col-xs-2"><a href="#" class="thumbnail"><img src="../images/'+operationHistory[i]+
+                    '.png" height="100"></a></div>');
                 }
             }
 
@@ -213,6 +238,27 @@
             });
 
             furtherAnalysisOkBtn.click(faOkHandler);
+
+
+            dialog = $("#dialog-form").dialog({
+                autoOpen: false,
+                height: 300,
+                width: 280,
+                modal: true,
+                close: function() {
+                    form[0].rest();
+                },
+                buttons: {
+                    "Sure": function(){},
+                    Cancel: function(){dialog.dialog('close')}
+                }
+            });
+
+            $('#next-model-tip').button().on('click', function(e) {
+                dialog.dialog('open');
+            });
+
+
 
             // Event Handler
 
@@ -256,8 +302,22 @@
             }
 
             function modelSelectHandler(param) {
-                var data = $(this).attr('name');
-                // TODO: change current analysis view
+                var vars = getUrlParams();
+                var paramX = vars['x'],
+                    paramY = vars['y'];
+                var returnData = {
+                    names: [paramX, paramY],
+                    seriesData: []
+                };
+
+                var model = $(this).attr('name');
+
+                operationHistory.push(model);
+
+                returnData.seriesData = JSON.parse(localStorage.getItem('currentData'))["seriesData"];
+                console.log(returnData);
+                setGraphModel(model, returnData);
+
             }
 
             function faOkHandler() {
