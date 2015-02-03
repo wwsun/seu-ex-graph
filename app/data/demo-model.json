@@ -1,10 +1,10 @@
 {
   "result": [
-    {"name":"product", "value":500},
-    {"name":"navigation", "value":1000}
+    {"name":"product", "value":300},
+    {"name":"navigation", "value":700}
   ],
   "result2": {
     "legendData": ["product", "navigation"],
-    "seriesData": [500, 1000]
+    "seriesData": [300, 700]
   }
 }

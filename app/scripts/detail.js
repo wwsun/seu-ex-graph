@@ -16,10 +16,11 @@
         function (ec) {
 
             // Model predication dialog
-            var dialog;
+            //var dialog;
 
             // DOM Elements
             var mainViewer = document.getElementById('main-viewer');
+            var sideViewer = document.getElementById('sidebar-content');
 
             var furtherTitle = $('#further-analysis-panel-header');
             var modelList = $('#model-list li a');
@@ -31,6 +32,7 @@
             var ecGraph = {
                 ecConfig: require('echarts/config'),
                 mainViewer: ec.init(mainViewer),
+                sideViewer: ec.init(sideViewer),
 
                 pieOption: {
                     tooltip: {
@@ -145,6 +147,9 @@
                 operationHistory = [];
                 operationHistory.push(model);
 
+                $('#sidebar').hide(); // Hide the sidebar
+                $('#sidebar-tip').hide();  // Hide the sidebar-tip
+
                 // TODO: query from database (x, y)
 
                 if (model === 'heatmap') {
@@ -192,6 +197,9 @@
                 // TODO: refresh the history panel
                 setHistoryPanel();
 
+                // TODO: reasoning and get the analysis result
+                $('#sidebar-tip').show();
+                $('#sidebar-tip-content').html('The eastern are more prudent than westerns on consuming! Especially the Japanese! ');
             }
 
             function setGraphModel(model, returnData) {
@@ -232,31 +240,46 @@
                 }
             }
 
+            function setSidebarPanel() {
+
+                $('#sidebar').show();
+
+                // Set default model: pie
+
+                var returnData = {
+                    legendData: ["western", "eastern"],
+                    seriesData: [
+                        {value: 40, name:"eastern"},
+                        {value: 60, name:"western"}
+                    ]
+                };
+                ecGraph.pieOption.legend.data = returnData.legendData;
+                ecGraph.pieOption.series[0].data = returnData.seriesData;
+                ecGraph.sideViewer.setOption(ecGraph.pieOption, {notMerger: true});
+            }
+
             // Event Binding
             modelList.each(function () {
                 $(this).click(modelSelectHandler);
             });
 
-            furtherAnalysisOkBtn.click(faOkHandler);
-
-
-            dialog = $("#dialog-form").dialog({
-                autoOpen: false,
-                height: 300,
-                width: 280,
-                modal: true,
-                close: function() {
-                    form[0].rest();
-                },
-                buttons: {
-                    "Sure": function(){},
-                    Cancel: function(){dialog.dialog('close')}
-                }
-            });
-
-            $('#next-model-tip').button().on('click', function(e) {
-                dialog.dialog('open');
-            });
+            //dialog = $("#dialog-form").dialog({
+            //    autoOpen: false,
+            //    height: 300,
+            //    width: 280,
+            //    modal: true,
+            //    close: function() {
+            //        form[0].rest();
+            //    },
+            //    buttons: {
+            //        "Sure": function(){},
+            //        Cancel: function(){dialog.dialog('close')}
+            //    }
+            //});
+            //
+            //$('#next-model-tip').button().on('click', function(e) {
+            //    dialog.dialog('open');
+            //});
 
 
 
@@ -269,12 +292,17 @@
                     if (confirm("Refresh the data from another perspective?")) {
                         localStorage.setItem('refresh', true);
                         refreshMainViewer();
+                        setSidebarPanel();  //display sidebar
                     }
                 } else {
                     localStorage.setItem('refresh', false);
                     console.log("You click the " + data.name);
                     localStorage.setItem("furtherData", data.name);
                     $("#further-model-list").empty();
+
+                    // TODO: get the predication model
+                    $('#next-model-tip img').attr("src", "../images/bar.png"); // setup the predication icon to sidebar
+
                     $.getJSON('../data/model-graph.json', function (json) {
 
                         var result = json[data.name]['models'];
@@ -318,11 +346,6 @@
                 console.log(returnData);
                 setGraphModel(model, returnData);
 
-            }
-
-            function faOkHandler() {
-                var faFromContent = furtherAnalysisForm.serialize();
-                console.log(faFromContent);
             }
 
             // Execution logic

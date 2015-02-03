@@ -1,94 +1,73 @@
-#content-wrapper {
-    margin-top: 6em;
+a.navbar-brand {
+    padding-top: 5px;
 }
 
-.graph {
-    height: 700px;
+#jumbotron {
+    margin-top: 10em;
+    text-align: center;
 }
 
-.child-panel {
-    height: 270px;
-}
-
-.child-chart {
-    height: 300px;
-}
-
-body.application {
-    padding: 0;
-    margin: 0;
-}
-
-.row {
-    margin: 0;
-}
-
-#app-wrapper {
-    height: 100%;
-    position: aboslute;
-    width: 100%;
-}
-
-#app-toolbar {
-    background: rgba(0,0,0,.75);
-    box-shadow: 0 1px 5px rgba(0,0,0,.1);
-    color: #fff;
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    z-index: 1;
-}
-
-#app-toolbar .btn-primary {
-    background-color: #00afd7;
-    border: medium none;
-}
-#app-toolbar .btn-primary:focus,
-#app-toolbar .btn-primary:hover {
-    background-color: #0098BB;
+#jumbotron p {
+    font-size: 1.5em;
+    color: #428bca;
 }
 
 #main-area {
-    padding-top: 6em;
-    border-right: 1px solid #d7d7d7;
-    position: fixed;
-    top: 0px;
-    width: 67%;
-    height: 700px;
-    z-index: 0;
+    margin-top: 5em;
 }
 
-#app-sidebar {
-    padding: 10px;
+#main-viewer {
+    height: 500px;
+}
+
+.image-menu-item {
+    padding: 6px;
+}
+
+#sidebar {
     position: absolute;
-    right: 0;
-    top: 75px;
-    width: 33%;
+    top: 25em;
+    left: 1em;
+    width: 260px;
 }
 
-#app-sidebar .chart-wrapper {
-    border: medium none;
-    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+#sidebar-content {
+    height: 300px;
 }
 
-.tools {
-    min-height: 75px;
-    padding: 0 5px 0 0;
+#sidebar-tip {
+    /*position: absolute;*/
+    /*top: 10em;*/
+    /*left: 1em;*/
+    /*width: 200px;*/
 }
 
-.tool input, .tool select {
-    background: rgba(0,0,0,.5);
-    border: medium none;
-    box-shadow: none;
-    color: #e7e7e7;
-    float: left;
-    margin: 0 1%;
+#logic-text {
+    color: #0066CC;
 }
-.radius input, .radius select {
-    width: 48%;
+
+
+#tooltip-panel {
+    display: block;
+    color: #414141;
+    background: #f1f1f1;
+    border: 1px solid #a9a9a9;
+    position: absolute;
+    z-index: 99999;
+    width: 530px;
+    padding: 6px 8px;
+    -webkit-box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    -moz-box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
+    box-shadow: 1px 3px 3px rgba(0,0,0,0.4);
 }
-.tool input,
-.tool label,
-.tool h5 {
-    text-shadow: 0 0 1px #000;
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background:#f2f2f2;
+    font-size: small;
+    border-top: 1px solid #e4e4e4;
+    line-height: 40px;
 }
