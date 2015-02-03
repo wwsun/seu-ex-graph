@@ -114,6 +114,73 @@
                             data: [600, 800, 200, 600]
                         }
                     ]
+                },
+                forceOption: {
+                    title : {
+                        text: 'Relationship Graph',
+                        x:'right',
+                        y:'bottom'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: '{a} : {b}'
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            restore : {show: true},
+                            magicType: {show: true, type: ['force', 'chord']}
+                        }
+                    },
+                    legend: {
+                        x: 'left',
+                        data:['inner','outer']
+                    },
+                    series : [
+                        {
+                            type:'force',
+                            name : "relationship",
+                            ribbonType: false,
+                            categories : [
+                                { name: 'main' },
+                                { name: 'inner' },
+                                { name: 'outer' }
+                            ],
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true,
+                                        textStyle: {
+                                            color: '#000000'
+                                        }
+                                    },
+                                    nodeStyle : {
+                                        borderWidth : 0
+                                    },
+                                    linkStyle: {
+                                        type: 'curve'
+                                    }
+                                },
+                                emphasis: {
+                                    label: {
+                                        show: false
+                                    },
+                                    nodeStyle : {
+                                        //r: 30
+                                    },
+                                    linkStyle : {}
+                                }
+                            },
+                            useWorker: false,
+                            minRadius : 15,
+                            maxRadius : 25,
+                            gravity: 1.1,
+                            scaling: 1.1,
+                            draggable: false,
+                            linkSymbol: 'arrow',
+                            roam: 'move'
+                        }
+                    ]
                 }
             };
 
@@ -204,6 +271,13 @@
                     $.getJSON('../data/search-engine.json', function(json) {
                         list = json['source'];
                         WordCloud(document.getElementById("tag-cloud"), {list:list});
+                    });
+                } else if (analysisType === 'figure' && model === 'force') {
+                    console.log("Hello world: figure and force");
+                    $.getJSON('../data/relationship-graph.json', function(json){
+                        ecGraph.forceOption.series[0].nodes = json['nodes'];
+                        ecGraph.forceOption.series[0].links = json['links'];
+                        ecGraph.mainViewer.setOption(ecGraph.forceOption);
                     });
                 }
             }

@@ -4,7 +4,7 @@
 
 (function ($) {
 
-    var sampleTags = ['apple phone', 'apple company', 'iphone', "jobs"];
+    var sampleTags = ['apple phone', 'apple company', 'iphone',];
     var data = [
         "navigation",
         "product",

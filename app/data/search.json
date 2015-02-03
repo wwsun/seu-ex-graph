@@ -39,37 +39,37 @@
     ],
     "links": [
       {
-        "source": "Search",
+        "“source”": "Search",
         "target": "Category A",
         "weight": 10,
         "name": "dest"
       },
       {
-        "source": "Search",
+        "“source”": "Search",
         "target": "Category B",
         "weight": 14,
         "name": "dest"
       },
       {
-        "source": "Search",
+        "“source”": "Search",
         "target": "Category C",
         "weight": 20,
         "name": "dest"
       },
       {
-        "source": "Search",
+        "“source”": "Search",
         "target": "Category D",
         "weight": 30,
         "name": "dest"
       },
       {
-        "source": "Homepage",
+        "“source”": "Homepage",
         "target": "Search",
         "weight": 30,
         "name": "src"
       },
       {
-        "source": "Mobile Channel",
+        "“source”": "Mobile Channel",
         "target": "Search",
         "weight": 20,
         "name": "src"
