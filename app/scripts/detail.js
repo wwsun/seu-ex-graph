@@ -25,9 +25,6 @@
             var furtherTitle = $('#further-analysis-panel-header');
             var modelList = $('#model-list li a');
 
-            var furtherAnalysisForm = $('#further-analysis-form');
-            var furtherAnalysisOkBtn = $('#further-analysis-ok-btn');
-
             // Graph Parameters
             var ecGraph = {
                 ecConfig: require('echarts/config'),
@@ -139,9 +136,25 @@
                 var model = vars['model'],
                     paramX = vars['x'],
                     paramY = vars['y'];
+
+                // TODO: refactor the 'returnData' to the new 'resultData'
+
                 var returnData = {
                     legendData: [paramX, paramY],
                     seriesData: []
+                };
+
+                var analysisType = localStorage.getItem("analysisType");
+
+                // New returnData
+                var resultData = {
+                    model: model,
+                    type: analysisType,
+                    col: 1,
+                    legendData: [],
+                    xAxis: [],
+                    series1: [],
+                    series2: []
                 };
 
                 operationHistory = [];
@@ -152,22 +165,46 @@
 
                 // TODO: query from database (x, y)
 
-                if (model === 'heatmap') {
-                    console.log(">>>"+model);
-                    setGraphModel(model, null);
-                } else {
+
+                if (analysisType === 'website' && model === 'pie') {
                     $.getJSON('../data/demo-model.json',function (json) {
-
                         localStorage.setItem('currentData',JSON.stringify(json['result2']));//store data for bar graph
-
                         returnData.seriesData = json['result'];
-
                         if (model !== undefined) {
                             setGraphModel(model, returnData);
                         } else {
                             console.log("No model!!!");
                         }
                     })
+                } else if (analysisType === 'website' && model ==='tagcloud') {
+
+                    $('#main-viewer').hide();
+                    $('#main-viewer2').append('<canvas id="tag-cloud" height="400" width="600"></canvas>');
+
+                    var list;
+                    $.getJSON('../data/keyword.json', function(json) {
+                        list = json['topKeywords'];
+                        WordCloud(document.getElementById("tag-cloud"), {list:list});
+                    });
+
+                } else if (analysisType === 'url') {
+                    setGraphModel(model, null);
+                } else if (analysisType === 'product' && model === 'bar' ) {
+                    resultData.col = 2;
+                    resultData.legendData = ["iphone", "ipad"];
+                    resultData.xAxis = ["Jan.","Feb","Mar.","Apr.","May.","June","July","Aug.","Sep.","Oct.","Nov.","Dec."];
+                    resultData.series1 = [20, 49, 70, 232, 256, 767, 136, 162, 326, 200, 64, 33];
+                    resultData.series2 = [26, 59, 90, 264, 287, 77, 176, 182, 487, 188, 60, 23];
+                    setGraphModelNew(model, resultData);
+                } else if (analysisType === 'product' && model === 'tagcloud') {
+                    $('#main-viewer').hide();
+                    $('#main-viewer2').append('<canvas id="tag-cloud" height="400" width="600"></canvas>');
+
+                    var list;
+                    $.getJSON('../data/search-engine.json', function(json) {
+                        list = json['source'];
+                        WordCloud(document.getElementById("tag-cloud"), {list:list});
+                    });
                 }
             }
 
@@ -229,6 +266,26 @@
                 }
             }
 
+            // TODO: refactor and combine
+            function setGraphModelNew(model, resultData) {
+                if (model === 'bar') {
+
+                    if (resultData.col === 1) {
+
+                    } else if (resultData.col === 2) {
+                        ecGraph.barOption.legend.data = resultData.legendData;
+                        ecGraph.barOption.xAxis[0].data = resultData.xAxis;
+                        ecGraph.barOption.series[0].name = resultData.legendData[0];
+                        ecGraph.barOption.series[0].data = resultData.series1;
+                        ecGraph.barOption.series[1].name = resultData.legendData[1];
+                        ecGraph.barOption.series[1].data = resultData.series2;
+
+                        ecGraph.mainViewer.setOption(ecGraph.barOption, {notMerger: true});
+                        $('#logic-text').html('');
+                    }
+                }
+            }
+
             function setHistoryPanel() {
 
                 var analysisHistory = $('#analysis-history');
@@ -262,26 +319,6 @@
             modelList.each(function () {
                 $(this).click(modelSelectHandler);
             });
-
-            //dialog = $("#dialog-form").dialog({
-            //    autoOpen: false,
-            //    height: 300,
-            //    width: 280,
-            //    modal: true,
-            //    close: function() {
-            //        form[0].rest();
-            //    },
-            //    buttons: {
-            //        "Sure": function(){},
-            //        Cancel: function(){dialog.dialog('close')}
-            //    }
-            //});
-            //
-            //$('#next-model-tip').button().on('click', function(e) {
-            //    dialog.dialog('open');
-            //});
-
-
 
             // Event Handler
 

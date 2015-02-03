@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../bower_components/jquery-ui/themes/start/jquery-ui.css">
     <link rel="stylesheet" href="../styles/main.css">
+
+    <script src="../scripts/vendors/wordcloud2.js"></script>
 </head>
 <body>
 
@@ -41,8 +43,8 @@
                 <div class="panel-body">
                     <div class="" id="analysis-history">
                     </div>
-                    <div class="col-md-offset-10">
-                        <button class="thumbnail" id="next-model-tip">
+                    <div class="col-md-offset-11">
+                        <button class="thumbnail" id="next-model-tip" title="Model predication">
                             <img src="../images/add-icon.png" class="img-rounded" style="opacity: 0.3;">
                         </button>
                     </div>
@@ -147,6 +149,8 @@
 <script src="../../bower_components/jquery-ui/ui/jquery-ui.js"></script>
 <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../../bower_components/echarts/build/dist/echarts.js"></script>
+
+
 <script>
     require.config({
         paths: {
@@ -154,6 +158,8 @@
         }
     });
 </script>
+
+
 
 <script src="../scripts/detail.js"></script>
 

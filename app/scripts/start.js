@@ -4,7 +4,7 @@
 
 (function ($) {
 
-    var sampleTags = ['apple phone', 'apple company', 'iphone'];
+    var sampleTags = ['apple phone', 'apple company', 'iphone', "jobs"];
     var data = [
         "navigation",
         "product",
@@ -88,13 +88,23 @@
 
         if (type !== undefined) {
             if (type.match(/website/)) {
-                modelList = ["pie", "snake", "chord", "force"];
+                modelList = ["pie", "tagcloud", "force", "snake"];
+                localStorage.setItem("analysisType","website");
             } else if (type.match(/flow/)) {
                 modelList = ["force", "line", "chord", "snake"];
-
+                localStorage.setItem("analysisType","flow");
             } else if (type.match(/^http/)) {
                 modelList = ["heatmap"];
+                localStorage.setItem("analysisType","url");
+            } else if (type.match(/apple/)) {
+                modelList = ["bar", "tagcloud", "pie"];
+                localStorage.setItem("analysisType","product");
+            } else if (type.match(/jobs/)) {
+                modelList = ["force","pie",  "chord"];
+                localStorage.setItem("analysisType", "figure")
             }
+
+            // TODO: match person name
 
             for (i = 0; i < modelList.length; i++) {
                 modelImageList.append('<div class="col-md-3"><a href="pages/detail.html?model=' +

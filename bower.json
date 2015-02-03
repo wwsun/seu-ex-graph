@@ -24,6 +24,7 @@
     "tag-it": "aehlke/tag-it",
     "jquery-ui": "1.9.2",
     "bx-slider.js": "~4.1.3",
-    "typehead.js": "~0.10.5"
+    "typehead.js": "~0.10.5",
+    "wordcloud2.js": "timdream/wordcloud2.js"
   }
 }
