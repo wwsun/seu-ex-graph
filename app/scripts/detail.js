@@ -11,6 +11,7 @@
             'echarts/chart/funnel',
             'echarts/chart/pie',
             'echarts/chart/bar',
+            'echarts/chart/gauge',
             'echarts/chart/line'
         ],
         function (ec) {
@@ -181,6 +182,97 @@
                             roam: 'move'
                         }
                     ]
+                },
+                gaugeOption: {
+                    tooltip : {
+                        formatter: "{a} <br/>{b} : {c}%"
+                    },
+                    toolbox: {
+                        show : false
+                    },
+                    series : [
+                        {
+                            name:'个性化仪表盘',
+                            type:'gauge',
+                            center : ['50%', '50%'],    // 默认全局居中
+                            radius : [0, '75%'],
+                            startAngle: 140,
+                            endAngle : -140,
+                            min: 0,                     // 最小值
+                            max: 100,                   // 最大值
+                            precision: 0,               // 小数精度，默认为0，无小数点
+                            splitNumber: 10,             // 分割段数，默认为5
+                            axisLine: {            // 坐标轴线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: [[0.2, 'lightgreen'],[0.4, 'orange'],[0.8, 'skyblue'],[1, '#ff4500']],
+                                    width: 30
+                                }
+                            },
+                            axisTick: {            // 坐标轴小标记
+                                show: true,        // 属性show控制显示与否，默认不显示
+                                splitNumber: 5,    // 每份split细分多少段
+                                length :8,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle控制线条样式
+                                    color: '#eee',
+                                    width: 1,
+                                    type: 'solid'
+                                }
+                            },
+                            axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
+                                show: true,
+                                formatter: function(v){
+                                    switch (v+''){
+                                        case '10': return 'Negative';
+                                        case '30': return 'Low';
+                                        case '60': return 'Mid';
+                                        case '90': return 'Positive';
+                                        default: return '';
+                                    }
+                                },
+                                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                                    color: '#333'
+                                }
+                            },
+                            splitLine: {           // 分隔线
+                                show: true,        // 默认显示，属性show控制显示与否
+                                length :30,         // 属性length控制线长
+                                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+                                    color: '#eee',
+                                    width: 2,
+                                    type: 'solid'
+                                }
+                            },
+                            pointer : {
+                                length : '80%',
+                                width : 8,
+                                color : 'auto'
+                            },
+                            title : {
+                                show : true,
+                                offsetCenter: ['-65%', -10],
+                                textStyle: {
+                                    color: '#333',
+                                    fontSize : 15
+                                }
+                            },
+                            detail : {
+                                show : true,
+                                backgroundColor: 'rgba(0,0,0,0)',
+                                borderWidth: 0,
+                                borderColor: '#ccc',
+                                width: 100,
+                                height: 40,
+                                offsetCenter: ['-60%', 10],
+                                formatter:'{value}%',
+                                textStyle: {
+                                    color: 'auto',
+                                    fontSize : 30
+                                }
+                            },
+                            data:[{value: 50, name: 'Sentiment Analysis'}]
+                        }
+                    ]
                 }
             };
 
@@ -273,12 +365,14 @@
                         WordCloud(document.getElementById("tag-cloud"), {list:list});
                     });
                 } else if (analysisType === 'figure' && model === 'force') {
-                    console.log("Hello world: figure and force");
                     $.getJSON('../data/relationship-graph.json', function(json){
                         ecGraph.forceOption.series[0].nodes = json['nodes'];
                         ecGraph.forceOption.series[0].links = json['links'];
                         ecGraph.mainViewer.setOption(ecGraph.forceOption);
                     });
+                } else if (analysisType === 'figure' && model === 'sentiment') {
+                    ecGraph.gaugeOption.series[0].data = [{value: 70, name: 'Sentiment Analysis'}];
+                    ecGraph.mainViewer.setOption(ecGraph.gaugeOption);
                 }
             }
 
@@ -404,6 +498,11 @@
                         localStorage.setItem('refresh', true);
                         refreshMainViewer();
                         setSidebarPanel();  //display sidebar
+
+                        // setup logic text
+                        $('#logic-text').append('<li class="list-group-item">导航关注度超过产品关注度</li>' +
+                        '<li class="list-group-item">东西方人关注行为差别</li>' +
+                        '<li class="list-group-item">西方人流量远超东方人流量</li>');
                     }
                 } else {
                     localStorage.setItem('refresh', false);

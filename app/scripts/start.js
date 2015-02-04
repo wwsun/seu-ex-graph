@@ -100,7 +100,7 @@
                 modelList = ["bar", "tagcloud", "pie"];
                 localStorage.setItem("analysisType","product");
             } else if (type.match(/jobs/)) {
-                modelList = ["force","pie",  "chord"];
+                modelList = ["force", "sentiment" ,"pie",  "chord"];
                 localStorage.setItem("analysisType", "figure")
             }
 
