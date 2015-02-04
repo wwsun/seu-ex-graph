@@ -12,7 +12,8 @@
             'echarts/chart/pie',
             'echarts/chart/bar',
             'echarts/chart/gauge',
-            'echarts/chart/line'
+            'echarts/chart/line',
+            'echarts/chart/map'
         ],
         function (ec) {
 
@@ -273,6 +274,57 @@
                             data:[{value: 50, name: 'Sentiment Analysis'}]
                         }
                     ]
+                },
+                mapOption: {
+                    title : {
+                        text: 'Flow Distribution',
+                        subtext: 'Calculated based on the session distribution.',
+                        x:'center',
+                        y:'top'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter : function (params) {
+                            var value = (params.value + '').split('.');
+                            value = value[0].replace(/(\d{1,3})(?=(?:\d{3})+(?!\d))/g, '$1,');
+                            return params.name + ' : ' + value;
+                        }
+                    },
+                    toolbox: {
+                        show : true,
+                        orient : 'vertical',
+                        x: 'right',
+                        y: 'center',
+                        feature : {
+                            mark : {show: false},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    dataRange: {
+                        min: 0,
+                        max: 73000,
+                        text:['High','Low'],
+                        realtime: false,
+                        calculable : true,
+                        color: ['orangered','yellow','lightskyblue']
+                        //color: ['#EE0000','#EE5C42','#EEE685']
+
+                    },
+                    series : [
+                        {
+                            name: 'Flow Distribution',
+                            type: 'map',
+                            mapType: 'world',
+                            roam: true,
+                            mapLocation: {
+                                y : 60
+                            },
+                            itemStyle:{
+                                emphasis:{label:{show:true}}
+                            }
+                        }
+                    ]
                 }
             };
 
@@ -346,6 +398,11 @@
                         WordCloud(document.getElementById("tag-cloud"), {list:list});
                     });
 
+                } else if (analysisType === 'website' && model === 'map') {
+                    $.getJSON('../data/geo-full.json', function(json) {
+                        ecGraph.mapOption.series[0].data = json;
+                        ecGraph.mainViewer.setOption(ecGraph.mapOption);
+                    });
                 } else if (analysisType === 'url') {
                     setGraphModel(model, null);
                 } else if (analysisType === 'product' && model === 'bar' ) {

@@ -88,7 +88,7 @@
 
         if (type !== undefined) {
             if (type.match(/website/)) {
-                modelList = ["pie", "tagcloud", "force", "snake"];
+                modelList = ["pie", "tagcloud", "map", "snake"];
                 localStorage.setItem("analysisType","website");
             } else if (type.match(/flow/)) {
                 modelList = ["force", "line", "chord", "snake"];
