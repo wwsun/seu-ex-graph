@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="../../bower_components/jquery-ui/themes/start/jquery-ui.css">
     <link rel="stylesheet" href="../styles/main.css">
 
+    <script>
+        var margin = {top: 1, right: 1, bottom: 6, left: 1},
+                width = 700 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+    </script>
+
+    <script src="../../bower_components/d3/d3.min.js"></script>
+    <script src="../scripts/vendors/sankey.js"></script>
+
     <script src="../scripts/vendors/wordcloud2.js"></script>
 </head>
 <body>
@@ -15,10 +24,6 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#"><img src="../images/logo.png" width="316"></a>
         </div>
@@ -54,11 +59,7 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title">Your Logic</h3></div>
-                    <ul class="list-group" id="logic-text">
-                        <!--<li>导航关注度超过产品关注度</li>-->
-                        <!--<li>东西方人关注行为差别</li>-->
-                        <!--<li>西方人流量远超东方人流量</li>-->
-                    </ul>
+                    <ul class="list-group" id="logic-text"></ul>
             </div>
         </div>
     </div>
@@ -72,6 +73,7 @@
                     Panel content
                 </div>
                 <div class="panel-body" id="main-viewer2">
+                    <p id="chart"></p>
                 </div>
             </div>
 
@@ -156,8 +158,6 @@
         }
     });
 </script>
-
-
 
 <script src="../scripts/detail.js"></script>
 
